@@ -16,6 +16,8 @@ defineLocale('pt-br', ptBrLocale);
 })
 export class EventosComponent implements OnInit {
 
+  titulo = 'Eventos';
+
   eventosFiltrados: Evento[];
   eventos: Evento[];
   evento: Evento;
@@ -108,7 +110,7 @@ export class EventosComponent implements OnInit {
     this.openModal(template);
   }
 
-  excluirEvento(evento: Evento, template: any) {    
+  excluirEvento(evento: Evento, template: any) {
     this.openModal(template);
     this.evento = evento;
     this.bodyDeletarEvento = `Tem certeza que deseja excluir o Evento: ${evento.tema}, Código: ${evento.id}`;
@@ -121,7 +123,7 @@ export class EventosComponent implements OnInit {
         this.getEventos();
         this.toastr.success('Deletado com sucesso!');
       },
-      error => { 
+      error => {
         this.toastr.error(`Erro ao deletar: ${error}`);
         console.error(error);
       }
