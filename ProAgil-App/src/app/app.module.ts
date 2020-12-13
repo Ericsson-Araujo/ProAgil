@@ -25,7 +25,7 @@ import { DateTimeFormatPipePipe } from './_helps/DateTimeFormatPipe.pipe';
 import { TituloComponent } from './titulo/titulo.component';
 
 @NgModule({
-   declarations: [	
+   declarations: [
       AppComponent,
       NavComponent,
       EventosComponent,
@@ -45,7 +45,7 @@ import { TituloComponent } from './titulo/titulo.component';
       BrowserAnimationsModule,
       ToastrModule.forRoot({
          timeOut: 10000,
-         positionClass: 'toast-bottom-right',
+         positionClass: 'toast-top-right',
          preventDuplicates: true,
        }),
       AppRoutingModule,

@@ -6,6 +6,7 @@ namespace ProAgil.WebAPI.Dtos
 {
     public class EventoDto
     {
+        public int Id { get; set; }
         [Required(ErrorMessage="O local é de preenchimento obrigatório")]
         public string Local {get;set;} 
 

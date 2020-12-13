@@ -75,7 +75,7 @@ namespace ProAgil.WebAPI.Controllers
 
         }
 
-        [HttpGet("upload")]
+        [HttpPost("upload")]
         public async Task<IActionResult> upload()
         {
             try
@@ -91,30 +91,30 @@ namespace ProAgil.WebAPI.Controllers
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        file.CopyTo(stream);
+                        await file.CopyToAsync(stream);
                     }
+                    return Ok();
                 }
-
-                return Ok();
             }
             catch (System.Exception)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de Dados Falhou");
             }
+
             return BadRequest("Erro ao tentar realizar upload.");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(EventoDto evento)
+        public async Task<IActionResult> Post(EventoDto model)
         {
             try
             {
-                var model = _mapper.Map<Evento>(evento);
-                _repo.Add(model);
+                var evento = _mapper.Map<Evento>(model);
+                _repo.Add(evento);
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"/api/evento/{model.Id}", _mapper.Map<EventoDto>(model));
+                    return Created($"/api/evento/{model.Id}", _mapper.Map<EventoDto>(evento));
                 }
             }
             catch (System.Exception ex)
@@ -126,21 +126,21 @@ namespace ProAgil.WebAPI.Controllers
         }
 
         [HttpPut("{EventoId}")]
-        public async Task<IActionResult> Put(int EventoId, EventoDto evento)
+        public async Task<IActionResult> Put(int EventoId, EventoDto model)
         {
             try
             {
-                var model = await _repo.GetAllEventoAsyncById(EventoId, false);
+                var evento = await _repo.GetAllEventoAsyncById(EventoId, false);
 
-                if (model == null) return NotFound();
+                if (evento == null) return NotFound();
 
-                _mapper.Map(evento, model);
+                _mapper.Map(model, evento);
 
-                _repo.Update(model);
+                _repo.Update(evento);
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"/api/evento/{model.Id}", _mapper.Map<EventoDto>(model));
+                    return Created($"/api/evento/{model.Id}", _mapper.Map<EventoDto>(evento));
                 }
             }
             catch (System.Exception ex)
