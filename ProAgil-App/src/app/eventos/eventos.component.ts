@@ -17,7 +17,7 @@ defineLocale('pt-br', ptBrLocale);
 export class EventosComponent implements OnInit {
 
   titulo = 'Eventos';
-
+  dataEvento: string;
   eventosFiltrados: Evento[];
   eventos: Evento[];
   evento: Evento;
@@ -36,7 +36,7 @@ export class EventosComponent implements OnInit {
 
   constructor(
       private eventoService: EventoService
-    , private fb: FormBuilder
+    , public fb: FormBuilder
     , private localeService: BsLocaleService
     , private toastr: ToastrService
     ) {
