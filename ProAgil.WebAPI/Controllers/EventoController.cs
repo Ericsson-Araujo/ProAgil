@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -130,12 +131,28 @@ namespace ProAgil.WebAPI.Controllers
         {
             try
             {
+                var idLotes = new List<int>();
+                var idRedesSociais = new List<int>();
+
+                model.Lotes.ForEach(
+                    lote => idLotes.Add(lote.Id));
+                model.RedesSociais.ForEach(
+                    redeSocial => idRedesSociais.Add(redeSocial.Id));
+                                
                 var evento = await _repo.GetAllEventoAsyncById(EventoId, false);
 
                 if (evento == null) return NotFound();
+                
+                var lotes = evento.Lotes.Where(
+                    lote => !idLotes.Contains(lote.Id));
+                var redesSociais = evento.RedesSociais.Where(
+                    redeSocial => !idRedesSociais.Contains(redeSocial.Id));
+
+                _repo.DeleteRange<Lote>(lotes.ToArray());
+                _repo.DeleteRange<RedeSocial>(redesSociais.ToArray());
 
                 _mapper.Map(model, evento);
-
+                                
                 _repo.Update(evento);
 
                 if (await _repo.SaveChangesAsync())

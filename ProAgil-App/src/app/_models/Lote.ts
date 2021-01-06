@@ -1,4 +1,7 @@
-export interface Lote {
+export class Lote {
+
+    constructor(){}
+
     id: number;
     nome: string;
     preco: number;

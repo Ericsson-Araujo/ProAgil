@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,10 @@ namespace ProAgil.Repository
         {
             _context.Remove(entity);
         }
-
+        public void DeleteRange<T>(T[] entities) where T : class
+        {
+            _context.RemoveRange(entities);
+        }
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync()) > 0;
@@ -127,6 +131,7 @@ namespace ProAgil.Repository
             query = query.Where(p => p.Nome.ToLower().Contains(nome.ToLower()));
 
             return await query.ToArrayAsync();
-        }     
+        }
+       
     }
 }

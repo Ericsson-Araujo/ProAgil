@@ -1,7 +1,10 @@
-export interface RedeSocial {
-    Id: number;
-    Nome: string;
-    URL: string;
-    EventoId?: number;
-    PalestranteId?: number;
+export class RedeSocial {
+
+    constructor(){}
+
+    id: number;
+    nome: string;
+    url: string;
+    eventoId?: number;
+    palestranteId?: number;
 }
