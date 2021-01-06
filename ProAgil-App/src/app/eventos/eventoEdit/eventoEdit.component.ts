@@ -60,6 +60,7 @@ export class EventoEditComponent implements OnInit {
     this.eventoService.getEventoById(idEvento)
       .subscribe(
         (evento: Evento) => {
+          this.dataAtual = new Date().getMilliseconds().toString();
           this.evento = Object.assign({}, evento);
           this.fileNameToUpload = evento.imagemURL.toString();
           this.imagemURL = `http://localhost:5000/resources/images/${evento.imagemURL}?_ts=${this.dataAtual}`;
@@ -109,14 +110,16 @@ export class EventoEditComponent implements OnInit {
     this.redesSociais.removeAt(id);
   }
 
-  onFileChange(file: FileList) {
+  onFileChange(files: FileList) {
     const reader = new FileReader();
 
-    reader.onload = (event: any) => this.imagemURL = event.target.result;
+    reader.onload = (event: any) => {
+      this.imagemURL = event.target.result;
+    };
 
     this.file = event.target.files;
 
-    reader.readAsDataURL(file[0]);
+    reader.readAsDataURL(files[0]);
   }
 
   salvarEvento() {
@@ -132,7 +135,7 @@ export class EventoEditComponent implements OnInit {
   }
 
   uploadImagem() {
-    if (this.registerForm.get('imagemURL').value !== '') {
+    if (this.registerForm.get('imagemURL').value !== '') {        
         this.eventoService.postUpload(this.file, this.fileNameToUpload).subscribe(
           () => {
             this.dataAtual = new Date().getMilliseconds().toString();
