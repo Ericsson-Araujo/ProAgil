@@ -10,7 +10,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 import { NgxCurrencyModule } from 'ngx-currency';
 
 import { EventoService } from './_services/evento.service';
@@ -29,7 +29,6 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
-
 
 @NgModule({
    declarations: [

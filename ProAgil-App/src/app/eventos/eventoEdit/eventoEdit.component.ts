@@ -20,8 +20,8 @@ export class EventoEditComponent implements OnInit {
   registerForm: FormGroup;
   file: File;
   fileNameToUpload: string;
-  dataAtual: string;
-  dataEvento: string;
+  dataAtual: string;  
+  customPatterns = { 0: { pattern: new RegExp('\[a-zA-Z\]')} };
 
   get lotes(): FormArray {
     return this.registerForm.get('lotes') as FormArray;
@@ -110,14 +110,14 @@ export class EventoEditComponent implements OnInit {
     this.redesSociais.removeAt(id);
   }
 
-  onFileChange(files: FileList) {
+  onFileChange(files: FileList, evento) {
     const reader = new FileReader();
 
     reader.onload = (event: any) => {
       this.imagemURL = event.target.result;
     };
 
-    this.file = event.target.files;
+    this.file = evento.target.files;
 
     reader.readAsDataURL(files[0]);
   }
@@ -135,7 +135,7 @@ export class EventoEditComponent implements OnInit {
   }
 
   uploadImagem() {
-    if (this.registerForm.get('imagemURL').value !== '') {        
+    if (this.registerForm.get('imagemURL').value !== '') {
         this.eventoService.postUpload(this.file, this.fileNameToUpload).subscribe(
           () => {
             this.dataAtual = new Date().getMilliseconds().toString();
